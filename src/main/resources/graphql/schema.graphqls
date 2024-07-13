@@ -1,0 +1,91 @@
+"""
+The Date scalar type for GraphQL
+"""
+scalar Date
+
+"""
+Input for creating or updating a user
+"""
+input UserInput {
+    username: String!
+    password: String!
+}
+
+"""
+Input for creating or updating a trip
+"""
+input TripInput {
+    startDate: Date
+    endDate: Date
+    coordinates: [CoordinateInput]
+    guests: [String]
+}
+
+"""
+Input for creating or updating a coordinate
+"""
+input CoordinateInput {
+    latitude: Float
+    longitude: Float
+}
+
+"""
+The Trip object type
+"""
+type Trip {
+    id: ID
+    startDate: Date
+    endDate: Date
+    coordinates: [Coordinate]
+    owner: String
+    guests: [String]
+}
+
+"""
+The Coordinate object type
+"""
+type Coordinate {
+    latitude: Float
+    longitude: Float
+}
+
+"""
+The root query type
+"""
+type Query {
+
+    """
+    Retrieves all trips.
+    """
+    getAllTrips: [Trip]
+
+    """
+    Retrieves a trip by its ID.
+    """
+    getTripById(id: ID!): Trip
+}
+
+"""
+The root mutation type
+"""
+type Mutation {
+    """
+    Create a new user
+    """
+    createUser(user: UserInput!): String!
+
+    """
+    Create a new trip
+    """
+    createTrip(trip: TripInput!): String!
+
+    """
+    Update an existing trip
+    """
+    updateTrip(id: ID!, trip: TripInput!): String!
+
+    """
+    Delete an existing trip
+    """
+    deleteTripById(id: ID!): String!
+}
